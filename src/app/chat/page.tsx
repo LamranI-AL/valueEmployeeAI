@@ -1,19 +1,11 @@
 "use client";
 import { descriptionSchema } from "@/schemas/descriptionSchema";
-import { chatSession } from "../../lib/AI";
 import { addCommentAction } from "@/actions/addComment";
-import { useEffect, useState } from "react";
-import { string } from "zod";
-import { connectTodb } from "@/db/connectTodb";
+import { useState } from "react";
 import toast from "react-hot-toast";
-export type AiObject = {
-  text: string;
-  mots_negatifs: string[];
-  mots_positifs: string[];
-  statut: string;
-};
+// import { AiObject } from "@/interfaces/Interface";
 function page() {
-  const [data, setData] = useState<AiObject | any>();
+  // const [data, setData] = useState<any>();
   const addcomment = async (formData: FormData) => {
     const description = formData.get("description");
     const newInputObject = {
@@ -26,11 +18,11 @@ function page() {
       toast.success("description ajouté avec succès");
       const toasId = toast.loading("Waiting...");
       console.log(result.data);
-      const AIgenerator: AiObject | any = await addCommentAction(message);
-      console.log(AIgenerator);
-      setData(AIgenerator);
+      await addCommentAction(message);
+      // console.log(AIgenerator);
+      // console.log(typeof AIgenerator);
+      // setData(AIgenerator);
       toast.dismiss(toasId);
-      //   toast.success("")
     } else {
       console.log(result.error);
       toast.error(
@@ -39,42 +31,40 @@ function page() {
     }
     console.log(description);
   };
-
   return (
-    <div>
-      <form action={addcomment} className="m-10 rounded-xl space-y-2">
-        <label htmlFor="OrderNotes" className="text-gray-200 m-1">
-          Description de personnes
-        </label>
+    <form action={addcomment} className="m-10 rounded-xl space-y-2">
+      <label htmlFor="OrderNotes" className="text-gray-200 m-1">
+        Description de personnes
+      </label>
 
-        <div className="overflow-hidden">
-          <textarea
-            id="OrderNotes"
-            name="description"
-            className="w-full resize-none p-5 border-x-0 border-t-0 border-gray-200  align-top sm:text-sm dark:border-gray-700 dark:bg-gray-800 dark:text-white"
-            rows={6}
-            placeholder="Enter any description of personne..."
-          ></textarea>
+      <div className="overflow-hidden">
+        <textarea
+          id="OrderNotes"
+          name="description"
+          className="w-full resize-none p-5 border-x-0 border-t-0 border-gray-200  align-top sm:text-sm dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+          rows={6}
+          placeholder="Enter any description of personne..."
+        ></textarea>
 
-          <div className="flex items-center justify-end gap-2 py-3">
-            <button
-              type="button"
-              className="rounded bg-gray-200 px-3 py-1.5 text-sm font-medium text-gray-700 hover:text-gray-600 dark:bg-gray-700 dark:text-gray-200 dark:hover:text-gray-100"
-            >
-              Clear
-            </button>
+        <div className="flex items-center justify-end gap-2 py-3">
+          <button
+            type="button"
+            className="rounded bg-gray-200 px-3 py-1.5 text-sm font-medium text-gray-700 hover:text-gray-600 dark:bg-gray-700 dark:text-gray-200 dark:hover:text-gray-100"
+          >
+            Clear
+          </button>
 
-            <button
-              type="submit"
-              className="rounded bg-slate-400 px-3 py-1.5 text-sm font-medium text-white hover:bg-slate-700"
-            >
-              generate
-            </button>
-          </div>
+          <button
+            type="submit"
+            className="rounded bg-slate-400 px-3 py-1.5 text-sm font-medium text-white hover:bg-slate-700"
+          >
+            generate
+          </button>
         </div>
-      </form>
-      <div className="">{data && data.text} </div>
-    </div>
+      </div>
+    </form>
+    // <div className="">{data && data.text} </div>
+    // </div>
   );
 }
 
