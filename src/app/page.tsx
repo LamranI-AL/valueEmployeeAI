@@ -1,16 +1,17 @@
 "use client";
+import Hero from "@/_components/hero-section";
 import Link from "next/link";
 
 export default function Home() {
-  const settings = [
-    { name: "profile", url: "/profile" },
-    { name: "sign in", url: "/auth/signin" },
-    { name: "chat", url: "/chat" },
-  ];
+  // const settings = [
+  //   { name: "profile", url: "/profile" },
+  //   { name: "sign in", url: "/auth/signin" },
+  //   { name: "chat", url: "/chat" },
+  // ];
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      from home page
-      <nav>
+    <main className="">
+      {/* from home page */}
+      {/* <nav>
         <div className="flex flex-row justify-around gap-2">
           {settings.map((navItem) => {
             return (
@@ -23,7 +24,8 @@ export default function Home() {
             );
           })}
         </div>
-      </nav>
+      </nav> */}
+      <Hero />
     </main>
   );
 }

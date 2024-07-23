@@ -6,18 +6,22 @@ import { createDescription } from "@/services/GetDescription";
 import { revalidatePath } from "next/cache";
 
 export const addCommentAction = async (message: string) => {
-  const resulte = await chatSession.sendMessage(message);
+  const resulte = await chatSession
+    .sendMessage(message)
+    .then((res) => {
+      return res;
+    })
+    .catch((err) => {
+      return err;
+    });
+  console.log(resulte?.response.text());
   await connectTodb();
   const newDescription: description = {
     description: message,
-    AIresult: resulte?.response.text() as string,
+    AIresult: resulte?.response.text(),
     user: "admin",
     date: new Date(Date.now()),
   };
-  console.log(newDescription);
   await createDescription(newDescription);
-  console.log(resulte?.response.text());
-  console.log(typeof resulte?.response.text());
   revalidatePath("/chat");
-  // return resulte?.response.text() as string;
 };

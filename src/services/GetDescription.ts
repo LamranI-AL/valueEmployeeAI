@@ -1,11 +1,6 @@
 import { connectTodb } from "@/db/connectTodb";
 import { description } from "@/interfaces/Interface";
-
-// const post
 const baseUrl: string = "http://localhost:3000";
-//CRUD operations
-
-//create
 export const createDescription = async (description: description) => {
   await connectTodb();
   const response = await fetch(`${baseUrl}/api/chat`, {
@@ -24,4 +19,3 @@ export const getDescriptions = async () => {
   const data = await response.json();
   return data;
 };
-// export const getDescriptionBy
