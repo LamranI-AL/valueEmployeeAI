@@ -1,17 +1,39 @@
-import React from "react";
+"use client";
+import React, { useEffect } from "react";
 import Link from "next/link";
-import { Archive, Bot, BotOff, Home, LogOut, Users } from "lucide-react";
+import {
+  Archive,
+  Bot,
+  BotOff,
+  Contact,
+  Home,
+  LogOut,
+  Users,
+} from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
+import { usePathname } from "next/navigation";
 export default function Chatlayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const pathname = usePathname();
+  useEffect(() => {
+    if (pathname === "/chat") {
+      document.title = "Oth-AI - Chat";
+    } else if (pathname === "/chat/archive") {
+      document.title = "Oth-AI - archive";
+    } else if (pathname === "/chat/profile") {
+      document.title = "Oth-AI - profile";
+    } else if (pathname === "/chat/contact") {
+      document.title = "Oth-AI - contact";
+    }
+  }, []);
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/40">
       <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex">
@@ -40,7 +62,9 @@ export default function Chatlayout({
               <TooltipTrigger asChild>
                 <Link
                   href="/chat"
-                  className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent text-accent-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+                  className={`flex h-9 w-9 items-center justify-center rounded-lg ${
+                    pathname === "/chat" ? "bg-accent" : ""
+                  } text-accent-foreground transition-colors hover:text-foreground md:h-8 md:w-8`}
                 >
                   <Bot className="h-5 w-5" />
                   <span className="sr-only">BOT</span>
@@ -52,7 +76,9 @@ export default function Chatlayout({
               <TooltipTrigger asChild>
                 <Link
                   href="/chat/archive"
-                  className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+                  className={`flex h-9 w-9 items-center justify-center rounded-lg ${
+                    pathname === "/chat/archive" ? "bg-accent" : ""
+                  } text-accent-foreground transition-colors hover:text-foreground md:h-8 md:w-8`}
                 >
                   <Archive className="h-5 w-5" />
                   <span className="sr-only">Archive</span>
@@ -63,14 +89,30 @@ export default function Chatlayout({
             <Tooltip>
               <TooltipTrigger asChild>
                 <Link
-                  href="/profile"
-                  className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+                  href="/chat/profile"
+                  className={`flex h-9 w-9 items-center justify-center rounded-lg ${
+                    pathname === "/chat/profile" ? "bg-accent" : ""
+                  } text-accent-foreground transition-colors hover:text-foreground md:h-8 md:w-8`}
                 >
                   <Users className="h-5 w-5" />
                   <span className="sr-only">Profile</span>
                 </Link>
               </TooltipTrigger>
               <TooltipContent side="right">Profile</TooltipContent>
+            </Tooltip>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Link
+                  href="/chat/contact"
+                  className={`flex h-9 w-9 items-center justify-center rounded-lg ${
+                    pathname === "/chat/contact" ? "bg-accent" : ""
+                  } text-accent-foreground transition-colors hover:text-foreground md:h-8 md:w-8`}
+                >
+                  <Contact className="h-5 w-5" />
+                  <span className="sr-only">contact</span>
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent side="right">contact</TooltipContent>
             </Tooltip>
           </nav>
           <nav className="mt-auto flex flex-col items-center gap-4 px-2 sm:py-5">

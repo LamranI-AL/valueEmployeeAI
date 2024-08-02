@@ -8,7 +8,6 @@ const markdawn = markdawnit();
 
 const Markdown = ({ text }: Props) => {
   const htmlContent = markdawn.render(text);
-  //   console.log(htmlContent);
   return <div dangerouslySetInnerHTML={{ __html: htmlContent }}></div>;
 };
 

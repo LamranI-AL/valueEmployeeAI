@@ -7,17 +7,18 @@ interface Props {
 export default function ButtonSignIn({ ButtonName }: Props) {
   const { data, status } = useSession();
   const handelClick = () => {
-    console.log(data);
-    if (status === "loading") {
-      signIn("google");
-    } else if (status === "authenticated") {
-      console.log("u are authenticated");
-      signOut();
-    } else {
-      signIn("google");
+    alert("click");
+    // console.log(data);
+    // if (status === "loading") {
+    //   signIn("google" , {redirect : false});
+    // } else if (status === "authenticated") {
+    //   console.log("u are authenticated");
+    //   signOut();
+    // } else {
+    //   signIn("google" ,  {redirect : false});
 
-      console.log("u are unauthenticated");
-    }
+    //   console.log("u are unauthenticated");
+    // }
   };
   return (
     <button

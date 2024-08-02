@@ -12,22 +12,27 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { ModeToggle } from "./mode-toggle";
+import { useSession } from "next-auth/react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const components: { title: string; href: string; description: string }[] = [
   {
     title: "CHAT",
     href: "/chat",
-    description: "description",
+    description:
+      "Our chatbot is here to provide assistance with any questions or concerns you may have. Whether you need help navigating our platform, understanding features, or troubleshooting issues, feel free to ask anything. We’re committed to enhancing your experience, so don’t hesitate to reach out. Enjoy seamless and efficient support at your fingertips!",
   },
   {
     title: "Archive",
     href: "/chat/archive",
-    description: "description",
+    description: "Archiving Your Conversation with the Chatbot",
   },
 ];
 export function NavigationMenuDemo() {
+  const { data: session } = useSession();
+  console.log(session);
   return (
-    <div className="flex my-1 justify-end gap-10 ">
+    <div className="flex my-1 justify-center gap-10 ">
       <div className="">
         <NavigationMenu>
           <NavigationMenuList>
@@ -39,24 +44,23 @@ export function NavigationMenuDemo() {
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <NavigationMenuTrigger>Profile</NavigationMenuTrigger>
+              <NavigationMenuTrigger>profile</NavigationMenuTrigger>
               <NavigationMenuContent>
-                <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+                <ul className="grid gap-3 p-3 w-[400px] ">
                   <li className="row-span-3">
                     <NavigationMenuLink asChild>
-                      <a
+                      <Link
                         className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                        href="/profile"
+                        href="/chat/profile"
                       >
-                        {/* <Icons.logo className="h-6 w-6" /> */}
                         <div className="mb-2 mt-4 text-lg font-medium">
                           Profile
                         </div>
                         <p className="text-sm leading-tight text-muted-foreground">
-                          Lorem, ipsum dolor sit amet consectetur adipisicing
-                          elit.
+                          Access your personal space to view and update your
+                          profile information.
                         </p>
-                      </a>
+                      </Link>
                     </NavigationMenuLink>
                   </li>
                 </ul>
@@ -65,7 +69,7 @@ export function NavigationMenuDemo() {
             <NavigationMenuItem>
               <NavigationMenuTrigger>Chat</NavigationMenuTrigger>
               <NavigationMenuContent>
-                <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+                <ul className="grid w-[400px] gap-3 p-3 md:w-[400px] md:grid-cols-2 ">
                   {components.map((component) => (
                     <ListItem
                       key={component.title}
@@ -80,9 +84,19 @@ export function NavigationMenuDemo() {
             </NavigationMenuItem>
             <NavigationMenuItem>
               <Link href="/chat" legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  login
-                </NavigationMenuLink>
+                {session !== null ? (
+                  <Avatar>
+                    <AvatarImage
+                      src={session?.user?.image as string}
+                      alt="@shadcn"
+                    />
+                    <AvatarFallback>PP</AvatarFallback>
+                  </Avatar>
+                ) : (
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    login
+                  </NavigationMenuLink>
+                )}
               </Link>
             </NavigationMenuItem>
           </NavigationMenuList>

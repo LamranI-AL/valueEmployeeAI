@@ -1,6 +1,7 @@
 import { connectTodb } from "@/db/connectTodb";
+import { baseUrl } from "./GetMessages";
 import { description } from "@/interfaces/Interface";
-const baseUrl: string = "http://localhost:3000";
+
 export const createDescription = async (description: description) => {
   await connectTodb();
   const response = await fetch(`${baseUrl}/api/chat`, {

@@ -3,47 +3,32 @@ import toast from "react-hot-toast";
 import { useChat } from "ai/react";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-// import Card from "./card";
-import { BotIcon, BotOff, Loader, PersonStandingIcon } from "lucide-react";
-// import { descriptionSchema } from "@/schemas/descriptionSchema";
-// import { useState } from "react";
+import { BotIcon, Loader, PersonStandingIcon } from "lucide-react";
 import Markdown from "@/_components/markdown";
+import { useState } from "react";
+import { createMessages } from "@/services/GetMessages";
+import { AIMessages } from "@/interfaces/Interface";
 
 function FormInput() {
   const { messages, input, handleInputChange, handleSubmit, isLoading, stop } =
     useChat({
       api: "api/chat",
     });
-  // const [inputUser, setInputUser] = useState("");
-  // const addcomment = async (formData: FormData) => {
-  //   const description = formData.get("description");
-  //   const newInputObject = {
-  //     description: description,
-  //   };
-  //   const result = descriptionSchema.safeParse(newInputObject);
-  //   const inputText = description;
-  //   const message = `J'ai un texte entre parenthèses. Tout d'abord, filtrez les mots de ce texte pour déterminer s'ils valorisent ou dévalorisent la personne. Ensuite, dites-moi si cette personne est bien ou non. Il s'agit d'un ouvrier et le texte est un commentaire d'un recruteur. Par exemple, le texte est : '${inputText}'. Vous pouvez simplement compter le nombre de mots négatifs et positifs. Si le nombre de mots négatifs est supérieur au nombre de mots positifs, cela signifie que cette personne a une mauvaise réputation dans l'entreprise. Dans le type de retour, je veux le texte, les mots négatifs, les mots positifs et le statut (bon ou mauvais) au format JSON.`;
-  //   if (result.success) {
-  //     const toasId = toast.loading("Waiting...");
-  //     await addCommentAction(message)
-  //       .then((res) => {
-  //         toast.dismiss(toasId);
-  //         toast.success("description ajouté avec succès");
-  //       })
-  //       .catch((er) => console.log(er));
-  //     //   console.log(reslt);
-  //   } else {
-  //     toast.error(
-  //       "Le texte n'est pas valide. Veuillez entrer un texte valide pour le traitement."
-  //     );
-  //   }
-  //   // console.log()
-  //   console.log(description);
-  // };
+  const [nbrSending, setNbrSending] = useState<number>(0);
   const onSubmit = async (event: any) => {
     event.preventDefault();
-    console.log(event.currentTarget.value);
-    // const result = await descriptionSchema.safeParse(event)
+    setNbrSending(nbrSending + 1);
+    console.log(nbrSending);
+    if (nbrSending === 0) {
+      //create messages
+      // await createMessages(messages as AIMessages).then(() => {
+      //   console.log("creat ok ");
+      // });
+    } else if (nbrSending > 0) {
+      //updating messages
+      console.log("pass");
+    }
+    // console.log(event.currentTarget.value);
     const loaderID = toast.loading("wait for generate");
     handleSubmit(event, {
       data: {
@@ -56,14 +41,10 @@ function FormInput() {
     }
     console.log(messages);
     console.log(typeof messages);
-    // toast.dismiss(loaderID);
   };
   return (
     <div>
-      <form /*action={addcomment}*/
-        onSubmit={onSubmit}
-        className="m-10 rounded-xl space-y-2 "
-      >
+      <form onSubmit={onSubmit} className="m-10 rounded-xl space-y-2 ">
         <label htmlFor="OrderNotes" className="m-1">
           Input
         </label>
@@ -109,7 +90,10 @@ function FormInput() {
                       m.role === "user"
                         ? "border italic font-bold py-1 px-4  border-slate-800 bg"
                         : ""
-                    } ${m.role === "user" && "text-indigo-800"}`}
+                    } ${
+                      m.role === "user" &&
+                      "text-slate-800 dark:text-slate-300 rounded-2xl text-end"
+                    }`}
                   >
                     {/* {m.content} */}
                     <Markdown text={m.content} />
