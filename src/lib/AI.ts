@@ -19,7 +19,7 @@ export const chatSession = model.startChat({
       role: "user",
       parts: [
         {
-          text: "J'ai un texte entre parenthèses. Tout d'abord, filtrez les mots de ce texte pour déterminer s'ils valorisent ou dévalorisent la personne. Ensuite, dites-moi si cette personne est bien ou non. Il s'agit d'un ouvrier et le texte est un commentaire d'un recruteur. Par exemple, le texte est : 'ce monsieur est pas discipliné et aussi irresponsable, de plus il ne respecte pas le temps'. Vous pouvez simplement compter le nombre de mots négatifs et positifs. Si le nombre de mots négatifs est supérieur au nombre de mots positifs, cela signifie que cette personne a une mauvaise réputation dans l'entreprise. Dans le type de retour, je veux le texte, les mots négatifs, les mots positifs et le statut (bon ou mauvais) au format JSON.",
+          text: "J'ai un texte entre parenthèses contenant un titre et une description. (\"Le titre de mon article est : 'Intelligence artificielle et la relation entre machine learning et Python'. La description est : 'L'IA est un outil très puissant basé sur le machine learning en général, mais il existe des bibliothèques Python qui facilitent les choses.'). Pouvez-vous me proposer des articles similaires, avec des titres et descriptions correspondants, au format JSON ?",
         },
       ],
     },
@@ -27,7 +27,7 @@ export const chatSession = model.startChat({
       role: "model",
       parts: [
         {
-          text: '```json\n{\n  "texte": "ce monsieur est pas discipliné et aussi irresponsable, de plus il ne respecte pas le temps",\n  "mots_negatifs": ["pas discipliné", "irresponsable", "ne respecte pas"],\n  "mots_positifs": [],\n  "statut": "mauvais"\n}\n``` \n',
+          text: '```json\n[\n  {\n    "title": "L\'apprentissage automatique avec Python : un guide pour les débutants",\n    "description": "Découvrez les bases de l\'apprentissage automatique et apprenez à utiliser des bibliothèques Python populaires comme scikit-learn pour construire des modèles prédictifs."\n  },\n  {\n    "title": "Les meilleurs frameworks Python pour l\'intelligence artificielle",\n    "description": "Explorez les frameworks Python les plus populaires pour le développement de l\'IA, tels que TensorFlow, PyTorch et Keras, et découvrez leurs fonctionnalités clés."\n  },\n  {\n    "title": "Applications de l\'intelligence artificielle basées sur le machine learning avec Python",\n    "description": "Découvrez des exemples concrets d\'applications de l\'IA basées sur le machine learning, tels que la vision par ordinateur, le traitement du langage naturel et la robotique, et comment les développer avec Python."\n  },\n  {\n    "title": "L\'intelligence artificielle : un outil puissant pour le développement web",\n    "description": "Apprenez comment intégrer des fonctionnalités d\'IA dans vos applications web à l\'aide de Python et de bibliothèques spécialisées."\n  },\n  {\n    "title": "Les défis éthiques de l\'intelligence artificielle et le rôle de Python",\n    "description": "Explorez les implications éthiques de l\'IA et comment les développeurs Python peuvent contribuer à créer une IA responsable."\n  }\n]\n```\n',
         },
       ],
     },

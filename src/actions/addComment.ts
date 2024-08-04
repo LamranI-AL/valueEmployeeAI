@@ -15,6 +15,7 @@ export const addCommentAction = async (message: string) => {
       return err;
     });
   console.log(resulte?.response.text());
+  console.log(typeof resulte?.response.text());
   await connectTodb();
   const newDescription: description = {
     description: message,
@@ -22,6 +23,7 @@ export const addCommentAction = async (message: string) => {
     user: "admin",
     date: new Date(Date.now()),
   };
-  await createDescription(newDescription);
+  console.log(newDescription);
+  // await createDescription(newDescription);
   revalidatePath("/chat");
 };
