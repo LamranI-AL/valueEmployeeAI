@@ -17,26 +17,46 @@ import {
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { chatSession } from "@/lib/AI";
 import { addCommentAction } from "@/actions/addComment";
+import { useSession } from "next-auth/react";
+import { v4 as uuidv4 } from "uuid";
+import { topic } from "@/interfaces/Interface";
+import { useRouter } from "next/navigation";
 
 function Form() {
+  const { data: session } = useSession();
+  const router = useRouter();
+  const id = uuidv4();
   const [imageUrl, setImageUrl] = useState("");
-
   const addTopic = async (formData: FormData) => {
+    const toasId = toast.loading("Adding article...");
     formData.append("imageUrl", imageUrl);
     const title = formData.get("title") as string;
     const description = formData.get("description") as string;
     const img = formData.get("imageUrl") as string;
-    const newTopic: any = {
+    const newTopic: topic | any = {
       title: title,
       description: description,
       img: img,
+      customId: id as string,
+      author: session?.user?.email ?? "user",
     };
     const finalPrompt = `Le titre de mon article est : '${title}'. La description est : '${description}'`;
-    addCommentAction(finalPrompt);
-    // console.log(result);
-    // const response =
+    const descriptionFromAction = await addCommentAction(
+      finalPrompt,
+      session?.user?.name as string,
+      id
+    );
+    await fetch("/api/description", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(descriptionFromAction),
+    });
+    toast.success("description added");
+    toast.dismiss(toasId);
+
     await fetch("/api/topics", {
       method: "POST",
       body: JSON.stringify(newTopic),
@@ -46,21 +66,22 @@ function Form() {
     })
       .then(() => toast.success("article added sucessfuly"))
       .catch(() => toast.error("error adding article"));
+    router.push("/articles/my-articles");
   };
   return (
     <Drawer>
-      <DrawerTrigger asChild>
-        <Button variant="outline" className="w-full flex">
+      <DrawerTrigger className="w-full" asChild>
+        <Button variant="outline" className="w-full mt-3">
           Add article
           <PlusSquare />{" "}
         </Button>
       </DrawerTrigger>
-      <DrawerContent>
+      <DrawerContent className="">
         <form action={addTopic}>
-          <div className="mx-auto w-full max-w-sm">
+          <div className="mx-auto w-full max-w-xl">
             <DrawerHeader>
-              <DrawerTitle>add new article</DrawerTitle>
-              <DrawerDescription>
+              <DrawerTitle className="text-center">Add new article</DrawerTitle>
+              <DrawerDescription className="text-center">
                 Set: image , title, description for your article.
               </DrawerDescription>
             </DrawerHeader>

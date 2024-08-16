@@ -3,6 +3,7 @@ export interface description {
   date: Date;
   user: string;
   AIresult: string;
+  topicCustomId: string;
 }
 export interface AiMessage {
   content: string;
@@ -27,4 +28,38 @@ export interface User {
   email: string;
   password: string;
   createdAt: Date;
+}
+export interface topic {
+  _id: string;
+  title: string;
+  description: string;
+  img: string;
+  customId: string;
+  author: string;
+}
+
+interface Concept {
+  name: string;
+  description: string;
+  examples: string[];
+}
+
+interface Resource {
+  type: string;
+  name: string;
+  lien: string;
+  auteur?: string; // Ce champ est optionnel
+}
+
+interface Details {
+  overview: string;
+  concepts: Concept[];
+  resources: Resource[];
+  how_to: string;
+}
+
+// Exemple d'utilisation de l'interface pour l'objet complet
+export interface descriptionAiArticle {
+  article: string;
+  details: Details;
 }

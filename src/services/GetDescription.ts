@@ -16,6 +16,7 @@ export const getDescriptions = async () => {
   await connectTodb();
   const response = await fetch(`${baseUrl}/api/chat`, {
     method: "GET",
+    cache: "no-cache",
   });
   const data = await response.json();
   return data;

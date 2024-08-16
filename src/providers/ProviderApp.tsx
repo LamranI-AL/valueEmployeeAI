@@ -8,6 +8,7 @@ import {
   Home,
   LogOut,
   PackagePlus,
+  PackageSearchIcon,
   User,
   Users,
 } from "lucide-react";
@@ -38,6 +39,8 @@ function ProviderApp({ children }: Props) {
       document.title = "Oth-AI - profile";
     } else if (pathname === "/chat/contact") {
       document.title = "Oth-AI - contact";
+    } else if (pathname === "/chat/articles/add-article") {
+      document.title = "Oth-AI - Articles";
     }
   }, []);
   return (
@@ -64,6 +67,7 @@ function ProviderApp({ children }: Props) {
               </TooltipTrigger>
               <TooltipContent side="right">Home</TooltipContent>
             </Tooltip>
+
             <Tooltip>
               <TooltipTrigger asChild>
                 <Link
@@ -78,34 +82,22 @@ function ProviderApp({ children }: Props) {
               </TooltipTrigger>
               <TooltipContent side="right">Chat</TooltipContent>
             </Tooltip>
+
             <Tooltip>
               <TooltipTrigger asChild>
                 <Link
-                  href="/chat/archive"
+                  href="/articles"
                   className={`flex h-9 w-9 items-center justify-center rounded-lg ${
-                    pathname === "/chat/archive" ? "bg-accent" : ""
+                    pathname === "/chat/articles/add-article" ? "bg-accent" : ""
                   } text-accent-foreground transition-colors hover:text-foreground md:h-8 md:w-8`}
                 >
-                  <Archive className="h-5 w-5" />
-                  <span className="sr-only">Archive</span>
+                  <PackageSearchIcon className="h-5 w-5" />
+                  <span className="sr-only">articles</span>
                 </Link>
               </TooltipTrigger>
-              <TooltipContent side="right">Archive</TooltipContent>
+              <TooltipContent side="right">articles</TooltipContent>
             </Tooltip>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Link
-                  href="/chat/profile"
-                  className={`flex h-9 w-9 items-center justify-center rounded-lg ${
-                    pathname === "/chat/profile" ? "bg-accent" : ""
-                  } text-accent-foreground transition-colors hover:text-foreground md:h-8 md:w-8`}
-                >
-                  <User className="h-5 w-5" />
-                  <span className="sr-only">Profile</span>
-                </Link>
-              </TooltipTrigger>
-              <TooltipContent side="right">Profile</TooltipContent>
-            </Tooltip>
+
             <Tooltip>
               <TooltipTrigger asChild>
                 <Link
@@ -120,20 +112,7 @@ function ProviderApp({ children }: Props) {
               </TooltipTrigger>
               <TooltipContent side="right">contact</TooltipContent>
             </Tooltip>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Link
-                  href="/chat/articles"
-                  className={`flex h-9 w-9 items-center justify-center rounded-lg ${
-                    pathname === "/chat/articles" ? "bg-accent" : ""
-                  } text-accent-foreground transition-colors hover:text-foreground md:h-8 md:w-8`}
-                >
-                  <PackagePlus className="h-5 w-5" />
-                  <span className="sr-only">article</span>
-                </Link>
-              </TooltipTrigger>
-              <TooltipContent side="right">add article</TooltipContent>
-            </Tooltip>
+
             <Tooltip>
               <TooltipTrigger asChild>
                 <div>

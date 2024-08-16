@@ -5,6 +5,9 @@ const DescriptionSchema = new mongoose.Schema({
   date: { type: Date },
   user: { type: String },
   AIresult: { type: String },
+  topicCustomId: { type: String },
 });
-const Description = mongoose.model("Description", DescriptionSchema);
+const Description =
+  mongoose.models.Description ||
+  mongoose.model("Description", DescriptionSchema);
 export default Description;

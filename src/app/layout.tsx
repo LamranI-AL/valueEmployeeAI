@@ -7,6 +7,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { NavigationMenuDemo } from "@/components/nav-bar";
 import Footer from "@/_components/footer";
 import ProviderApp from "@/providers/ProviderApp";
+import { getServerSession } from "next-auth";
 
 const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
@@ -30,7 +31,6 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            {/* <NavigationMenuDemo /> */}
             <ProviderApp children={children} />
             <Footer />
           </ThemeProvider>

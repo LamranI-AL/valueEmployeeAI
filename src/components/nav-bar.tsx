@@ -11,21 +11,21 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import { ModeToggle } from "./mode-toggle";
+// import { ModeToggle } from "./mode-toggle";
 import { useSession } from "next-auth/react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+// import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const components: { title: string; href: string; description: string }[] = [
   {
-    title: "CHAT",
-    href: "/chat",
-    description:
-      "Our chatbot is here to provide assistance with any questions or concerns you may have. Whether you need help navigating our platform, understanding features, or troubleshooting issues, feel free to ask anything. We’re committed to enhancing your experience, so don’t hesitate to reach out. Enjoy seamless and efficient support at your fingertips!",
+    title: "My articles",
+    href: "/articles/my-articles",
+    description: "Show your personal articles and manage them",
   },
   {
-    title: "Archive",
-    href: "/chat/archive",
-    description: "Archiving Your Conversation with the Chatbot",
+    title: "Add article",
+    href: "/articles/add-article",
+    description:
+      "Add an article to help others learn from your content and gain insights.",
   },
 ];
 export function NavigationMenuDemo() {
@@ -44,21 +44,21 @@ export function NavigationMenuDemo() {
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <NavigationMenuTrigger>profile</NavigationMenuTrigger>
+              <NavigationMenuTrigger> All articles</NavigationMenuTrigger>
               <NavigationMenuContent>
                 <ul className="grid gap-3 p-3 w-[400px] ">
                   <li className="row-span-3">
                     <NavigationMenuLink asChild>
                       <Link
                         className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                        href="/chat/profile"
+                        href="/articles"
                       >
                         <div className="mb-2 mt-4 text-lg font-medium">
-                          Profile
+                          All articles
                         </div>
                         <p className="text-sm leading-tight text-muted-foreground">
-                          Access your personal space to view and update your
-                          profile information.
+                          Display all articles created by other users and
+                          explore how others think.
                         </p>
                       </Link>
                     </NavigationMenuLink>
@@ -67,7 +67,7 @@ export function NavigationMenuDemo() {
               </NavigationMenuContent>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <NavigationMenuTrigger>Chat</NavigationMenuTrigger>
+              <NavigationMenuTrigger>article</NavigationMenuTrigger>
               <NavigationMenuContent>
                 <ul className="grid w-[400px] gap-3 p-3 md:w-[400px] md:grid-cols-2 ">
                   {components.map((component) => (
@@ -82,7 +82,7 @@ export function NavigationMenuDemo() {
                 </ul>
               </NavigationMenuContent>
             </NavigationMenuItem>
-            <NavigationMenuItem>
+            {/* <NavigationMenuItem>
               <Link href="/chat" legacyBehavior passHref>
                 {session !== null ? (
                   <Avatar>
@@ -98,13 +98,13 @@ export function NavigationMenuDemo() {
                   </NavigationMenuLink>
                 )}
               </Link>
-            </NavigationMenuItem>
+            </NavigationMenuItem> */}
           </NavigationMenuList>
         </NavigationMenu>
       </div>
-      <div className="mx-2 ">
+      {/* <div className="mx-2 ">
         <ModeToggle />
-      </div>
+      </div> */}
     </div>
   );
 }
