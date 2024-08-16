@@ -8,11 +8,12 @@ export default withAuth(
     const isAuth = await getToken({ req: request }); // Récupère le token d'authentification
 
     const protectedRoutes = [
-      // "/chat/profile",
-      // "/chat/archive",
-      // "/auth",
-      // "/chat",
+      "/profile/:path*",
+      "/auth/:path*",
+      "/chat/:path*",
       "/contact",
+      "/articles",
+      "/articles/:path",
     ];
 
     // Vérifie si la route actuelle est protégée
@@ -40,5 +41,12 @@ export default withAuth(
 );
 
 export const config = {
-  matcher: ["/profile/:path*", "/auth/:path*", "/chat/:path*", "/contact"],
+  matcher: [
+    "/profile/:path*",
+    "/auth/:path*",
+    "/chat/:path*",
+    "/contact",
+    "/articles",
+    "/articles/:path",
+  ],
 };
